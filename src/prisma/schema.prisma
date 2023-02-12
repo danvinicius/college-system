@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Aluno {
+    id                Int           @id @default(autoincrement())
+    nome              String        @db.VarChar(255)
+    dataDeNasc        DateTime      @db.Date
+    dataDeMatricula   DateTime      @db.Date
+    matricula         String        @db.VarChar(255)
+    email             String        @db.VarChar(255)
+    turmas            TurmaAluno[]
+}
+
+model Turma {
+    codigo            String        @id @db.VarChar(6)
+    professor         String        @db.VarChar(6)
+    disciplina        Disciplina    @relation(fields: [codigoDisciplina], references: [codigo])
+    codigoDisciplina  String
+    sala              Int           @db.Int
+    horario           DateTime      @db.Time
+    alunos            TurmaAluno[]
+    periodo           Periodo       @relation(fields: [codigoPeriodo], references: [codigo])
+    codigoPeriodo     String
+}
+
+model TurmaAluno {
+    aluno             Aluno         @relation(fields: [alunoId], references: [id])
+    alunoId           Int
+    turma             Turma         @relation(fields: [codigoTurma], references: [codigo])
+    codigoTurma       String
+    nota              Float         @db.Double
+    resultado         Resultado
+    @@id([alunoId, codigoTurma])
+}
+
+enum Resultado {
+    AP
+    RM
+    RF
+}
+
+model Disciplina {
+    codigo            String        @id @db.VarChar(6)  
+    departamento      String        @db.VarChar(255) 
+    nome              String        @db.VarChar(255)
+    cargaHoraria      Int           @db.Int
+    turmas            Turma[]
+}
+
+model Periodo {
+    codigo            String        @id @db.VarChar(6)
+    dataInicio        DateTime      @db.Date
+    dataFim           DateTime      @db.Date
+    turmas            Turma[]
+}
