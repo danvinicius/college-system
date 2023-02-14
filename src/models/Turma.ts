@@ -1,21 +1,15 @@
+import { Turma } from "@prisma/client";
+import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
 import { BaseDatabase } from "../prisma/BaseDatabase";
 
-interface ITurma {
-    codigo: string;
-    professor: string;
-    codigoDisciplina: string;
-    sala: number;
-    horario: string;
-    codigoPeriodo: string;
-}
-export default class TurmaModel {
+export default class TurmaModel implements BasicCrudOperations<Turma> {
     async getAll() {
         try {
             const turma = await BaseDatabase.turma.findMany();
             return turma;
         } catch (error) {
             console.log(error);
-            return false
+            return null;
         }
     }
     async getById(codigo: string) {
@@ -24,16 +18,40 @@ export default class TurmaModel {
             return turma;
         } catch (error) {
             console.log(error);
-            return false
+            return null;
         }
     }
-    async create() {
-        
+    async create(turma: Turma) {
+        try {
+            const novaTurma = await BaseDatabase.turma.create({data: turma})
+            return novaTurma;
+            
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
-    async update() {
-        
+    async update(codigo: string, turma: Turma) {
+        try {
+            const turmaAtualizada = await BaseDatabase.turma.update({
+                where: {
+                    codigo,
+                },
+                data: turma,
+            });
+            return turmaAtualizada;
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
-    async delete() {
-        
+    async delete(codigo: string) {
+        try {
+            const turmaDeletada = await BaseDatabase.turma.delete({where: {codigo}});
+            return turmaDeletada;
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
 }

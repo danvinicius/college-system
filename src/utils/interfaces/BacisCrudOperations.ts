@@ -1,13 +1,8 @@
-import { Request, Response } from 'express';
+export default interface BasicCrudOperations<T> {
 
-export default interface BasicCrudOperations {
-    getAll(req: Request, res: Response): any;
-
-    getById(req: Request, res: Response): any;
-    
-    create(req: Request, res: Response): any;
-    
-    update(req: Request, res: Response): any;
-    
-    delete(req: Request, res: Response): any;
+        getAll(): Promise<T[] | null>;
+        getById(id: any): Promise<T | null>;
+        create(data: T): Promise<T | null>;
+        update(id: any, data: any): Promise<T | null>;
+        delete(id: any): Promise<T | null>;
 }

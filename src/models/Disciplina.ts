@@ -1,19 +1,15 @@
+import { Disciplina } from "@prisma/client";
+import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
 import { BaseDatabase } from "../prisma/BaseDatabase";
 
-interface IDisciplina {
-    codigo: string; 
-    departamento: string; 
-    nome: string; 
-    cargaHoraria: number;
-}
-export default class DisciplinaModel {
+export default class DisciplinaModel implements BasicCrudOperations<Disciplina> {
     async getAll() {
         try {
             const disciplina = await BaseDatabase.disciplina.findMany();
             return disciplina;
         } catch (error) {
             console.log(error);
-            return false
+            return null
         }
     }
     async getById(codigo: string) {
@@ -22,16 +18,40 @@ export default class DisciplinaModel {
             return disciplina;
         } catch (error) {
             console.log(error);
-            return false
+            return null;
         }
     }
-    async create() {
-        
+    async create(disciplina: Disciplina) {        
+        try {
+            const novaDisciplina = await BaseDatabase.disciplina.create({data: disciplina})
+            return novaDisciplina;
+            
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
-    async update() {
-        
+    async update(codigo: string, disciplina: Disciplina) {
+        try {
+            const disciplinaAtualizada = await BaseDatabase.disciplina.update({
+                where: {
+                    codigo,
+                },
+                data: disciplina,
+            });
+            return disciplinaAtualizada;
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
-    async delete() {
-        
+    async delete(codigo: string) {
+        try {
+            const disciplinaDeletada = await BaseDatabase.disciplina.delete({where: {codigo}});
+            return disciplinaDeletada;
+        } catch (error) {
+            console.log(error);
+            return null
+        }
     }
 }
