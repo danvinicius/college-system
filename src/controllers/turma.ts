@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import TurmaModel from 'src/models/Turma';
+import TurmaModel from '../models/Turma';
 import { Turma } from '@prisma/client';
 
 const model = new TurmaModel();

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import Aluno from '../controllers/aluno';
+import AlunoController from '../controllers/aluno';
 
 const router = Router();
-const controller = new Aluno();
+const controller = new AlunoController();
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);

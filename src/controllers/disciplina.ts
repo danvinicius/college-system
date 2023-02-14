@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import DisciplinaModel from 'src/models/Disciplina';
+import DisciplinaModel from '../models/Disciplina';
 import { Disciplina } from '@prisma/client';
 
 const model = new DisciplinaModel();

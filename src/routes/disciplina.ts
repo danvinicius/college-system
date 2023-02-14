@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import Disciplina from '../controllers/disciplina';
+import DisciplinaController from '../controllers/disciplina';
 
 const router = Router();
-const controller = new Disciplina();
+const controller = new DisciplinaController();
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);

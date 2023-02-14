@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-
-import PeriodoModel from 'src/models/Periodo';
+import PeriodoModel from '../models/Periodo';
 import { Periodo } from '@prisma/client';
 
 const model = new PeriodoModel();

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import Periodo from '../controllers/periodo';
+import PeriodoController from '../controllers/periodo';
 
 const router = Router();
-const controller = new Periodo();
+const controller = new PeriodoController();
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);

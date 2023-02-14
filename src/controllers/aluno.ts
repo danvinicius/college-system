@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import AlunoModel from 'src/models/Aluno';
+import AlunoModel from '../models/Aluno';
 import { Aluno } from '@prisma/client';
 
 const model = new AlunoModel();

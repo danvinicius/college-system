@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import Turma from '../controllers/turma';
+import TurmaController from '../controllers/turma';
 
 const router = Router();
-const controller = new Turma();
+const controller = new TurmaController();
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
