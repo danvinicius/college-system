@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2019", 
-    "moduleResolution": "node", 
-    "lib": ["es2019"],
+    "target": "es2016", 
+    "module": "commonjs",
+    "lib": ["es2016"],
     "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

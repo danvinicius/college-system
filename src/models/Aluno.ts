@@ -1,6 +1,6 @@
 import { Aluno } from "@prisma/client";
 import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../prisma/BaseDatabase";
+import { BaseDatabase } from "../../prisma/BaseDatabase";
 
 export default class AlunoModel implements BasicCrudOperations<Aluno> {
     async getAll() {

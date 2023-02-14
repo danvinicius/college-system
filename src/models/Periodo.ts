@@ -1,6 +1,6 @@
 import { Periodo } from "@prisma/client";
 import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../prisma/BaseDatabase";
+import { BaseDatabase } from "../../prisma/BaseDatabase";
 
 export default class PeriodoModel implements BasicCrudOperations<Periodo> {
     async getAll() {

@@ -1,6 +1,6 @@
 import { Turma } from "@prisma/client";
 import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../prisma/BaseDatabase";
+import { BaseDatabase } from "../../prisma/BaseDatabase";
 
 export default class TurmaModel implements BasicCrudOperations<Turma> {
     async getAll() {

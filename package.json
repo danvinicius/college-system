@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "start": "yarn build && node dist/App.js",
+    "start": "yarn build && node dist/src/App.js",
     "dev": "ts-node-dev src/App.ts",
     "test:functional": "jest --projects ./test --runInBand",
     "lint": "eslint ./src ./test --ext .ts",
