@@ -1,6 +1,6 @@
-import { Aluno } from "@prisma/client";
-import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../../prisma/BaseDatabase";
+import { Aluno } from '@prisma/client';
+import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class AlunoModel implements BasicCrudOperations<Aluno> {
     async getAll() {
@@ -12,13 +12,13 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             return null;
         }
     }
-    async getById(id: number) {
+    async getById(matricula: string) {
         try {
-            const aluno = await BaseDatabase.aluno.findUnique({where: {id}})
+            const aluno = await BaseDatabase.aluno.findUnique({where: {matricula}});
             return aluno;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async create(aluno: Aluno) {
@@ -29,43 +29,53 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         if (!this.matriculaCoerente(aluno.matricula, aluno.dataDeMatricula)) {
             return null;
         }
+
+        aluno.dataDeNasc = new Date(aluno.dataDeNasc);
+        aluno.dataDeMatricula = new Date(aluno.dataDeMatricula);
+        
         try {
-            const novoAluno = await BaseDatabase.aluno.create({data: aluno})
+            const novoAluno = await BaseDatabase.aluno.create({data: aluno});
             return novoAluno;
             
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
-    async update(id: number, aluno: Aluno) {
+    async update(matricula: string, aluno: Aluno) {
 
-        if (!this.idadeCoerente(aluno.dataDeNasc)) {
-            return null;
+        if (aluno.dataDeNasc) {
+            aluno.dataDeNasc = new Date(aluno.dataDeNasc);
+            if (!this.idadeCoerente(aluno.dataDeNasc)) {
+                return null;
+            }
         }
-        if (!this.matriculaCoerente(aluno.matricula, aluno.dataDeMatricula)) {
-            return null;
+        if (aluno.dataDeMatricula && aluno.matricula) {
+            aluno.dataDeMatricula = new Date(aluno.dataDeMatricula);
+            if (!this.matriculaCoerente(aluno.matricula, aluno.dataDeMatricula)) {
+                return null;
+            }
         }
         try {
             const alunoAtualizado = await BaseDatabase.aluno.update({
                 where: {
-                    id,
+                    matricula,
                 },
                 data: aluno,
             });
             return alunoAtualizado;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
-    async delete(id: number) {
+    async delete(matricula: string) {
         try {
-            const alunoDeletado = await BaseDatabase.aluno.delete({where: {id}});
+            const alunoDeletado = await BaseDatabase.aluno.delete({where: {matricula}});
             return alunoDeletado;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
 
@@ -90,16 +100,35 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         return true;
     }
 
-    calculoIRADeUmPeriodo() {
-
+    async calculoIRADeUmPeriodo(matricula: string, periodo: string) {
+        const notasAluno = await this.consultaNotasDeUmPeriodo(matricula, periodo);
+        const notas = notasAluno.map(n => n.nota);
+        const cargasHorarias = notasAluno.map(n => n.turma.disciplina.cargaHoraria);
+        let somaPonderada = 0;
+        const somaCargasHorarias = cargasHorarias.reduce((acc, curr) => acc + curr, 0);
+        for (let i = 0; i < notas.length; i++) {
+            somaPonderada += (notas[i] * cargasHorarias[i]);
+        }
+        const mediaPonderada = somaPonderada / somaCargasHorarias;
+        return mediaPonderada;
+        
+    }
+    
+    async calculoIRATotal(matricula: string) {
+        const notasAluno = await this.consultaNotasDeTodosOsPeriodos(matricula);
+        const notas = notasAluno.map(n => n.nota);
+        const cargasHorarias = notasAluno.map(n => n.turma.disciplina.cargaHoraria);
+        let somaPonderada = 0;
+        const somaCargasHorarias = cargasHorarias.reduce((acc, curr) => acc + curr, 0);
+        for (let i = 0; i < notas.length; i++) {
+            somaPonderada += (notas[i] * cargasHorarias[i]);
+        }
+        const mediaPonderada = somaPonderada / somaCargasHorarias;
+        return mediaPonderada;
     }
 
-    calculoIRATotal() {
-
-    }
-
-    async consultaNotasDeUmPeriodo(id: number, codigoPeriodo: string) {
-        const alunoTurmas = await BaseDatabase.turmaAluno.findMany({
+    async consultaNotasDeUmPeriodo(matricula: string, codigoPeriodo: string) {
+        const notasAluno = await BaseDatabase.turmaAluno.findMany({
             select: {
                 nota: true,
                 turma: {
@@ -118,7 +147,9 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
                 },
             },
             where: {
-                alunoId: id,
+                aluno: {
+                    matricula,
+                },
                 turma: {
                     periodo: {
                         codigo: codigoPeriodo,
@@ -126,11 +157,11 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
                 }
             }
         });
-        return alunoTurmas;
+        return notasAluno;
     }
 
-    async consultaNotasDeTodosOsPeriodos(id: number, codigoPeriodo: string) {
-        const alunoTurmas = await BaseDatabase.turmaAluno.findMany({
+    async consultaNotasDeTodosOsPeriodos(matricula: string) {
+        const notasAluno = await BaseDatabase.turmaAluno.findMany({
             select: {
                 nota: true,
                 turma: {
@@ -149,9 +180,11 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
                 },
             },
             where: {
-                alunoId: id,
+                aluno: {
+                    matricula,
+                }
             }
         });
-        return alunoTurmas;
+        return notasAluno;
     }
 }

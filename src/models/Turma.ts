@@ -1,6 +1,6 @@
-import { Turma } from "@prisma/client";
-import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../../prisma/BaseDatabase";
+import { Turma } from '@prisma/client';
+import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class TurmaModel implements BasicCrudOperations<Turma> {
     async getAll() {
@@ -23,26 +23,26 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
     }
     async create(turma: Turma) {
         try {
-            const novaTurma = await BaseDatabase.turma.create({data: turma})
+            const novaTurma = await BaseDatabase.turma.create({data: turma});
             return novaTurma;
             
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async update(codigo: string, turma: Turma) {
         try {
             const turmaAtualizada = await BaseDatabase.turma.update({
                 where: {
-                    codigo,
+                    codigo: codigo,
                 },
                 data: turma,
             });
             return turmaAtualizada;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async delete(codigo: string) {
@@ -51,7 +51,7 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
             return turmaDeletada;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
 }

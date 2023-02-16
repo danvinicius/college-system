@@ -1,6 +1,6 @@
 import express from 'express';
 import Server from './Server';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 

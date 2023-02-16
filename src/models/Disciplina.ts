@@ -1,6 +1,6 @@
-import { Disciplina } from "@prisma/client";
-import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../../prisma/BaseDatabase";
+import { Disciplina } from '@prisma/client';
+import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class DisciplinaModel implements BasicCrudOperations<Disciplina> {
     async getAll() {
@@ -9,7 +9,7 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
             return disciplina;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async getById(codigo: string) {
@@ -23,15 +23,16 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
     }
     async create(disciplina: Disciplina) {        
         try {
-            const novaDisciplina = await BaseDatabase.disciplina.create({data: disciplina})
+            const novaDisciplina = await BaseDatabase.disciplina.create({data: disciplina});
             return novaDisciplina;
             
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async update(codigo: string, disciplina: Disciplina) {
+        console.log('codigo: ' + codigo);
         try {
             const disciplinaAtualizada = await BaseDatabase.disciplina.update({
                 where: {
@@ -42,7 +43,7 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
             return disciplinaAtualizada;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async delete(codigo: string) {
@@ -51,7 +52,7 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
             return disciplinaDeletada;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
 }

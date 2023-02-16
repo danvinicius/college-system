@@ -15,18 +15,18 @@ model Aluno {
     nome              String        @db.VarChar(255)
     dataDeNasc        DateTime      @db.Date
     dataDeMatricula   DateTime      @db.Date
-    matricula         String        @db.VarChar(255)
-    email             String        @db.VarChar(255)
+    matricula         String        @unique @db.VarChar(255)
+    email             String        @unique @db.VarChar(255)
     turmas            TurmaAluno[]
 }
 
 model Turma {
     codigo            String        @id @db.VarChar(6)
-    professor         String        @db.VarChar(6)
+    professor         String        @db.VarChar(255)
     disciplina        Disciplina    @relation(fields: [codigoDisciplina], references: [codigo])
     codigoDisciplina  String
     sala              Int           @db.Int
-    horario           DateTime      @db.Time
+    horario           String        @db.VarChar(8)
     alunos            TurmaAluno[]
     periodo           Periodo       @relation(fields: [codigoPeriodo], references: [codigo])
     codigoPeriodo     String

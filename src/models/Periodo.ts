@@ -1,6 +1,6 @@
-import { Periodo } from "@prisma/client";
-import BasicCrudOperations from "src/utils/interfaces/BacisCrudOperations";
-import { BaseDatabase } from "../../prisma/BaseDatabase";
+import { Periodo } from '@prisma/client';
+import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class PeriodoModel implements BasicCrudOperations<Periodo> {
     async getAll() {
@@ -30,13 +30,16 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
             return null;
         }
 
+        periodo.dataInicio = new Date(periodo.dataInicio);
+        periodo.dataFim = new Date(periodo.dataFim);
+
         try {
             const novoPeriodo = await BaseDatabase.periodo.create({data: periodo});
             return novoPeriodo;
             
         } catch (error) {
             console.log(error);
-            return null;;
+            return null;
         }
 
     }
@@ -58,7 +61,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
             return periodoAtualizado;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
     async delete(codigo: string) {
@@ -67,7 +70,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
             return periodoDeletado;
         } catch (error) {
             console.log(error);
-            return null
+            return null;
         }
     }
 
@@ -91,7 +94,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
         const diasUteis = diffDias - diasNaoUteis;
 
         if (diasUteis < 90) {
-            return null;;
+            return null;
         }
         return true;
     }
