@@ -7,7 +7,7 @@ Testes unitários, testes de integração, testes funcionais e testes de sistema
 
 ### Descrição do trabalho:
 
-- Construir um sistema de informação para cadastro, consulta, removação e alteração de dados de acordo com o modelo abaixo.
+- Construir um sistema de informação para cadastro, consulta, remoção e alteração de dados de acordo com o modelo abaixo.
 
 - Desenvolver as seguintes funções de validação de dados:
 
