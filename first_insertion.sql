@@ -18,33 +18,8 @@ VALUES
     ('2019.2', '2019-07-01', '2021-12-30'),
     ('2020.1', '2020-03-01', '2021-06-30'),
     ('2020.2', '2020-07-01', '2021-12-30'),
-    ('2021.2', '2021-07-01', '2021-12-30');
-
--- Inserir 5 entradas aleatórias na tabela Turma
-INSERT INTO Turma (codigo, professor, codigoDisciplina, sala, horario, codigoPeriodo)
-VALUES 
-    ('INF001', 'João da Silva', 'IC160', 101, '08:00:00', '2019.1'),
-    ('INF002', 'Maria dos Santos', 'IC165', 102, '10:00:00', '2018.2'),
-    ('INF003', 'Pedro Paulo', 'IC170', 103, '14:00:00', '2019.1'),
-    ('INF004', 'Ana Carolina', 'IC175', 104, '16:00:00', '2020.1'),
-    ('INF005', 'Gabriel Souza', 'IC180', 105, '18:00:00', '2021.1'),
-    ('INF006', "João da Silva", "IC160", 101, "08:00:00", "2019.1");
-
--- Inserir 5 entradas aleatórias na tabela TurmaAluno
-INSERT INTO TurmaAluno (alunoId, codigoTurma, nota, resultado)
-VALUES 
-    (4, 'INF001', 8.5, 'AP'),
-    (4, 'INF006', 10.0, 'AP'),
-    (4, 'INF002', 7.0, 'AP'),
-    (5, 'INF003', 4.0, 'RM'),
-    (5, 'INF004', 9.0, 'AP'),
-    (6, 'INF005', 8.0, 'AP'),
-	(6, 'INF001', 8.5, 'AP'),
-    (7, 'INF002', 3.5, 'RM'),
-    (7, 'INF003', 6.5, 'RF'),
-    (8, 'INF004', 9.0, 'AP'),
-    (8, 'INF005', 8.0, 'AP');
-    
+    ('2021.2', '2021-07-01', '2021-12-30'),
+    ('2021.1', '2021-03-01', '2021-7-30');
 
 -- Inserir 5 entradas aleatórias na tabela Disciplina
 INSERT INTO Disciplina (codigo, departamento, nome, cargaHoraria)
@@ -54,3 +29,29 @@ VALUES
     ('IC170', 'Departamento de Computação', 'Banco de Dados', 30),
     ('IC175', 'Departamento de Matemática', 'Cálculo I', 30),
     ('IC180', 'Departamento de Matemática', 'Cálculo II', 60);
+
+-- Inserir 5 entradas aleatórias na tabela Turma
+INSERT INTO Turma (codigo, professor, codigoDisciplina, sala, horario, codigoPeriodo)
+VALUES 
+    ('INF001', 'João da Silva', 'IC160', 101, '08:00:00', '2019.1'),
+    ('INF002', 'Maria dos Santos', 'IC165', 102, '10:00:00', '2018.2'),
+    ('INF003', 'Pedro Paulo', 'IC170', 103, '14:00:00', '2019.1'),
+    ('INF004', 'Ana Carolina', 'IC175', 104, '16:00:00', '2020.1'),
+    ('INF005', 'Gabriel Souza', 'IC180', 105, '18:00:00', '2021.1'),
+    ('INF006', "João da Silva", 'IC160', 101, "08:00:00", "2019.1");
+
+-- Inserir 5 entradas aleatórias na tabela TurmaAluno
+INSERT INTO TurmaAluno (alunoId, codigoTurma, nota, resultado)
+VALUES 
+    (1, 'INF001', 8.5, 'AP'),
+    (1, 'INF006', 10.0, 'AP'),
+    (1, 'INF002', 7.0, 'AP'),
+    (2, 'INF003', 4.0, 'RM'),
+    (2, 'INF004', 9.0, 'AP'),
+    (3, 'INF005', 8.0, 'AP'),
+	(3, 'INF001', 8.5, 'AP'),
+    (4, 'INF002', 3.5, 'RM'),
+    (4, 'INF003', 6.5, 'RF'),
+    (5, 'INF004', 9.0, 'AP'),
+    (5, 'INF005', 8.0, 'AP');
+    

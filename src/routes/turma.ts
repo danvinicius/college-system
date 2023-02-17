@@ -8,6 +8,7 @@ router.get('/', controller.getAll);
 router.get('/:codigo', controller.getById);
 router.post('/', controller.create);
 router.put('/:codigo', controller.update);
+router.post('/aluno/:codigo', controller.insereAluno);
 router.delete('/:codigo', controller.delete);
 
 export default router;

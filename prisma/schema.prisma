@@ -15,7 +15,7 @@ model Aluno {
     nome              String        @db.VarChar(255)
     dataDeNasc        DateTime      @db.Date
     dataDeMatricula   DateTime      @db.Date
-    matricula         String        @unique @db.VarChar(255)
+    matricula         String        @unique @db.VarChar(11)
     email             String        @unique @db.VarChar(255)
     turmas            TurmaAluno[]
 }

@@ -50,12 +50,28 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
                 return null;
             }
         }
+        if (aluno.dataDeMatricula && !aluno.matricula) {
+            aluno.dataDeMatricula = new Date(aluno.dataDeMatricula);
+            if (!this.matriculaCoerente(matricula, aluno.dataDeMatricula)) {
+                return null;
+            }
+        }
+        if (aluno.matricula && !aluno.dataDeMatricula) {
+            const buscaData = await BaseDatabase.aluno.findUnique({where: {matricula}});
+            const dataDeMatricula = buscaData?.dataDeMatricula;
+            if (dataDeMatricula) {
+                if (!this.matriculaCoerente(aluno.matricula, dataDeMatricula)) {
+                    return null;
+                }
+            }
+        }
         if (aluno.dataDeMatricula && aluno.matricula) {
             aluno.dataDeMatricula = new Date(aluno.dataDeMatricula);
             if (!this.matriculaCoerente(aluno.matricula, aluno.dataDeMatricula)) {
                 return null;
             }
         }
+        
         try {
             const alunoAtualizado = await BaseDatabase.aluno.update({
                 where: {
@@ -85,6 +101,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         const idadeAluno = anoAtual - anoNascAluno;
         
         if (idadeAluno < 16 || idadeAluno > 100) {
+            console.log('Data de nascimento incoerente');
             return false;
         }
         return true;
@@ -95,6 +112,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         const primeiros4DigitosDaMatricula = matricula.slice(0, 4);
 
         if (anoMatricula !== Number(primeiros4DigitosDaMatricula)) {
+            console.log('Matrícula incoerente');
             return false;
         }
         return true;

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import TurmaModel from '../models/Turma';
-import { Turma } from '@prisma/client';
+import { Turma, TurmaAluno } from '@prisma/client';
 
 const model = new TurmaModel();
 
@@ -47,6 +47,15 @@ export default class TurmaController {
         const turmaDeletada: Turma | null = await model.delete(codigo);
         if (turmaDeletada) {
             return res.json(turmaDeletada).status(200);
+        }
+        return res.json({err: 'Bad request'}).status(400);
+    }
+
+    async insereAluno(req: Request, res: Response) {
+        const {codigo} = req.params;
+        const alunoInserido: TurmaAluno | null = await model.insereAluno({codigoTurma: codigo, ...req.body});
+        if (alunoInserido) {
+            return res.json(alunoInserido).status(200);
         }
         return res.json({err: 'Bad request'}).status(400);
     }

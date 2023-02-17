@@ -32,7 +32,6 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
         }
     }
     async update(codigo: string, disciplina: Disciplina) {
-        console.log('codigo: ' + codigo);
         try {
             const disciplinaAtualizada = await BaseDatabase.disciplina.update({
                 where: {

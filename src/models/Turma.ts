@@ -1,4 +1,4 @@
-import { Turma } from '@prisma/client';
+import { Aluno, Turma, TurmaAluno } from '@prisma/client';
 import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
 import { BaseDatabase } from '../../prisma/BaseDatabase';
 
@@ -49,6 +49,25 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
         try {
             const turmaDeletada = await BaseDatabase.turma.delete({where: {codigo}});
             return turmaDeletada;
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+    async insereAluno(data: TurmaAluno & {matricula?: string}) {
+        try {
+            const aluno = await BaseDatabase.aluno.findUnique({where: {matricula: data.matricula}});
+            const alunoId = aluno?.id;
+            if (alunoId) {
+                delete data.matricula;
+                const alunoInserido = await BaseDatabase.turmaAluno.create({data: {
+                    ...data,
+                    alunoId,
+                }});
+                return alunoInserido;
+            }
+            return null;
         } catch (error) {
             console.log(error);
             return null;
