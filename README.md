@@ -3,7 +3,7 @@
 ## Trabalho de Tópicos Especiais em Engenharia de Software
 
 ### Assuntos abordado na disciplina
-Testes unitários, testes de integração, testes funcionais e testes de sistema
+Testes unitários, testes de integração e testes de sistema
 
 ### Descrição do trabalho:
 
