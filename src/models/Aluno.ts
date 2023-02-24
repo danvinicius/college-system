@@ -1,5 +1,5 @@
 import { Aluno } from '@prisma/client';
-import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import BasicCrudOperations from 'src/interfaces/BacisCrudOperations';
 import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class AlunoModel implements BasicCrudOperations<Aluno> {
@@ -128,12 +128,23 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             somaPonderada += (notas[i] * cargasHorarias[i]);
         }
         const mediaPonderada = somaPonderada / somaCargasHorarias;
-        return mediaPonderada;
+        
+        const resultados = notasAluno.map(n => {
+            return {
+                turma: n.turma.codigo, 
+                resultado: n.resultado
+            };
+        });
+        return {
+            mediaPonderada,
+            resultados,
+        };
         
     }
     
     async calculoIRATotal(matricula: string) {
         const notasAluno = await this.consultaNotasDeTodosOsPeriodos(matricula);
+        console.log(notasAluno);
         const notas = notasAluno.map(n => n.nota);
         const cargasHorarias = notasAluno.map(n => n.turma.disciplina.cargaHoraria);
         let somaPonderada = 0;
@@ -142,13 +153,26 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             somaPonderada += (notas[i] * cargasHorarias[i]);
         }
         const mediaPonderada = somaPonderada / somaCargasHorarias;
-        return mediaPonderada;
+        
+        const resultados = notasAluno.map(n => {
+            return {
+                turma: n.turma.codigo, 
+                resultado: n.resultado
+            };
+        });
+        console.log(mediaPonderada);
+        
+        return {
+            mediaPonderada,
+            resultados,
+        };
     }
-
+    
     async consultaNotasDeUmPeriodo(matricula: string, codigoPeriodo: string) {
         const notasAluno = await BaseDatabase.turmaAluno.findMany({
             select: {
                 nota: true,
+                resultado: true,
                 turma: {
                     include: {
                         disciplina: {
@@ -182,6 +206,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         const notasAluno = await BaseDatabase.turmaAluno.findMany({
             select: {
                 nota: true,
+                resultado: true,
                 turma: {
                     include: {
                         disciplina: {

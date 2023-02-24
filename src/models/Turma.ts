@@ -1,5 +1,5 @@
 import { Aluno, Turma, TurmaAluno } from '@prisma/client';
-import BasicCrudOperations from 'src/utils/interfaces/BacisCrudOperations';
+import BasicCrudOperations from 'src/interfaces/BacisCrudOperations';
 import { BaseDatabase } from '../../prisma/BaseDatabase';
 
 export default class TurmaModel implements BasicCrudOperations<Turma> {

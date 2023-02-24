@@ -8,9 +8,9 @@ export default class AlunoController {
     async getAll(req: Request, res: Response) {
         const alunos: Aluno[] | null = await model.getAll();
         if (alunos) {
-            return res.json(alunos).status(200);
+            return res.status(200).json(alunos);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
         
     }
 
@@ -18,18 +18,18 @@ export default class AlunoController {
         const {matricula} = req.params;
         const aluno: Aluno | null = await model.getById(matricula);
         if (aluno) {
-            return res.json(aluno).status(200);
+            return res.status(200).json(aluno);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
     
     async create(req: Request, res: Response) {
         const aluno: Aluno = req.body;
         const alunoCriado: Aluno | null = await model.create(aluno);
         if (alunoCriado) {
-            return res.json(alunoCriado).status(200);
+            return res.status(200).json(alunoCriado);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
     
     async update(req: Request, res: Response) {
@@ -37,35 +37,35 @@ export default class AlunoController {
         const aluno: Aluno = req.body;
         const alunoAtualizado: Aluno | null = await model.update(matricula, aluno);
         if (alunoAtualizado) {
-            return res.json(alunoAtualizado).status(200);
+            return res.status(200).json(alunoAtualizado);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
     
     async delete(req: Request, res: Response) {
         const {matricula} = req.params;
         const alunoDeletado: Aluno | null = await model.delete(matricula);
         if (alunoDeletado) {
-            return res.json(alunoDeletado).status(200);
+            return res.status(200).json(alunoDeletado);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
 
     async calculoIRADeUmPeriodo(req: Request, res: Response) {
         const {matricula, periodo} = req.params;
         const iraPeriodo = await model.calculoIRADeUmPeriodo(matricula, periodo);
         if (iraPeriodo) {
-            return res.json({media: iraPeriodo}).status(200);
+            return res.status(200).json(iraPeriodo);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
     
     async calculoIRATotal(req: Request, res: Response) {
         const {matricula} = req.params;
         const iraPeriodo = await model.calculoIRATotal(matricula);
         if (iraPeriodo) {
-            return res.json({media: iraPeriodo}).status(200);
+            return res.status(200).json(iraPeriodo);
         }
-        return res.json({err: 'Bad request'}).status(400);
+        return res.status(400).json({err: 'Bad request'});
     }
 }
