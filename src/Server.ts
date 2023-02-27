@@ -5,11 +5,11 @@ import disciplinaRouter from './routes/disciplina';
 import periodoRouter from './routes/periodo';
 
 export default class Server {
-    constructor(private app: Express, private port: number) {}
+    constructor(private app: Express, private port: number) { }
 
     config() {
         this.app.use(express.json());
-        this.app.use(express.urlencoded({extended: true}));
+        this.app.use(express.urlencoded({ extended: true }));
         this.app.use('/aluno', alunoRouter);
         this.app.use('/turma', turmaRouter);
         this.app.use('/disciplina', disciplinaRouter);

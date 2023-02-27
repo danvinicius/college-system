@@ -1,8 +1,8 @@
 import AlunoModel from '../../src/models/Aluno';
 const model = new AlunoModel();
 
-it('should return the total IRA of the student', async ()=> {
-    
+it('should return the total IRA of the student', async () => {
+
     model.consultaNotasDeTodosOsPeriodos = jest.fn().mockResolvedValue([
         {
             nota: 8,

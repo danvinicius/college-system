@@ -14,7 +14,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
     }
     async getById(matricula: string) {
         try {
-            const aluno = await BaseDatabase.aluno.findUnique({where: {matricula}});
+            const aluno = await BaseDatabase.aluno.findUnique({ where: { matricula } });
             return aluno;
         } catch (error) {
             console.log(error);
@@ -32,11 +32,11 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
 
         aluno.dataDeNasc = new Date(aluno.dataDeNasc);
         aluno.dataDeMatricula = new Date(aluno.dataDeMatricula);
-        
+
         try {
-            const novoAluno = await BaseDatabase.aluno.create({data: aluno});
+            const novoAluno = await BaseDatabase.aluno.create({ data: aluno });
             return novoAluno;
-            
+
         } catch (error) {
             console.log(error);
             return null;
@@ -57,7 +57,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             }
         }
         if (aluno.matricula && !aluno.dataDeMatricula) {
-            const buscaData = await BaseDatabase.aluno.findUnique({where: {matricula}});
+            const buscaData = await BaseDatabase.aluno.findUnique({ where: { matricula } });
             const dataDeMatricula = buscaData?.dataDeMatricula;
             if (dataDeMatricula) {
                 if (!this.matriculaCoerente(aluno.matricula, dataDeMatricula)) {
@@ -71,7 +71,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
                 return null;
             }
         }
-        
+
         try {
             const alunoAtualizado = await BaseDatabase.aluno.update({
                 where: {
@@ -87,7 +87,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
     }
     async delete(matricula: string) {
         try {
-            const alunoDeletado = await BaseDatabase.aluno.delete({where: {matricula}});
+            const alunoDeletado = await BaseDatabase.aluno.delete({ where: { matricula } });
             return alunoDeletado;
         } catch (error) {
             console.log(error);
@@ -99,7 +99,7 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
         const anoAtual = new Date().getFullYear();
         const anoNascAluno = new Date(dataDeNasc).getFullYear();
         const idadeAluno = anoAtual - anoNascAluno;
-        
+
         if (idadeAluno < 16 || idadeAluno > 100) {
             console.log('Data de nascimento incoerente');
             return false;
@@ -128,10 +128,10 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             somaPonderada += (notas[i] * cargasHorarias[i]);
         }
         const mediaPonderada = somaPonderada / somaCargasHorarias;
-        
+
         const resultados = notasAluno.map(n => {
             return {
-                turma: n.turma.codigo, 
+                turma: n.turma.codigo,
                 resultado: n.resultado
             };
         });
@@ -139,12 +139,11 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             mediaPonderada,
             resultados,
         };
-        
+
     }
-    
+
     async calculoIRATotal(matricula: string) {
         const notasAluno = await this.consultaNotasDeTodosOsPeriodos(matricula);
-        console.log(notasAluno);
         const notas = notasAluno.map(n => n.nota);
         const cargasHorarias = notasAluno.map(n => n.turma.disciplina.cargaHoraria);
         let somaPonderada = 0;
@@ -153,21 +152,20 @@ export default class AlunoModel implements BasicCrudOperations<Aluno> {
             somaPonderada += (notas[i] * cargasHorarias[i]);
         }
         const mediaPonderada = somaPonderada / somaCargasHorarias;
-        
+
         const resultados = notasAluno.map(n => {
             return {
-                turma: n.turma.codigo, 
+                turma: n.turma.codigo,
                 resultado: n.resultado
             };
         });
-        console.log(mediaPonderada);
-        
+
         return {
             mediaPonderada,
             resultados,
         };
     }
-    
+
     async consultaNotasDeUmPeriodo(matricula: string, codigoPeriodo: string) {
         const notasAluno = await BaseDatabase.turmaAluno.findMany({
             select: {

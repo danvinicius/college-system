@@ -4,13 +4,13 @@ import App from '../../src/App';
 const req = supertest(App);
 const baseRoute = '/turma';
 
-describe('GET /turma', ()=> {
+describe('GET /turma', () => {
 
     it('SUCCESS: Should return all turmas', async () => {
         return req.get(baseRoute).then(res => expect(res.statusCode).toEqual(200));
     });
 
-    it('FAIL: Should return 400 for a id that doesnt exist', async ()=> {
+    it('FAIL: Should return 400 for a id that doesnt exist', async () => {
         return req.get(`${baseRoute}/CAP001`).then(res => {
             expect(res.statusCode).toEqual(400);
             expect(res.body.err).toBe('Bad request');
@@ -19,7 +19,7 @@ describe('GET /turma', ()=> {
 
 });
 
-describe('POST /turma and DELETE /turma', ()=> {
+describe('POST /turma and DELETE /turma', () => {
 
     it('SUCCESS: Should insert student in database successfully', async () => {
         const validTurmaData = {
@@ -36,7 +36,7 @@ describe('POST /turma and DELETE /turma', ()=> {
                     expect(res.body.codigoDisciplina).toEqual(validTurmaData.codigoDisciplina);
                     return req.post(baseRoute).send(validTurmaData).then(res => expect(res.body.codigoDisciplina).toEqual(validTurmaData.codigoDisciplina));
                 });
-            
+
             } else {
                 return req.post(baseRoute).send(validTurmaData).then(res => expect(res.body.codigoDisciplina).toEqual(validTurmaData.codigoDisciplina));
             }
@@ -45,8 +45,8 @@ describe('POST /turma and DELETE /turma', ()=> {
 
 });
 
-describe('PUT /turma', ()=> {
-    it('SUCCESS: Should update turm successfully', async ()=> {
+describe('PUT /turma', () => {
+    it('SUCCESS: Should update turm successfully', async () => {
         const codigo = 'INF999';
         const validStudentData = {
             professor: 'Celso Portiolli',

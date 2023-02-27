@@ -14,7 +14,7 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
     }
     async getById(codigo: string) {
         try {
-            const turma = await BaseDatabase.turma.findUnique({where: {codigo}});
+            const turma = await BaseDatabase.turma.findUnique({ where: { codigo } });
             return turma;
         } catch (error) {
             console.log(error);
@@ -23,9 +23,9 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
     }
     async create(turma: Turma) {
         try {
-            const novaTurma = await BaseDatabase.turma.create({data: turma});
+            const novaTurma = await BaseDatabase.turma.create({ data: turma });
             return novaTurma;
-            
+
         } catch (error) {
             console.log(error);
             return null;
@@ -47,7 +47,7 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
     }
     async delete(codigo: string) {
         try {
-            const turmaDeletada = await BaseDatabase.turma.delete({where: {codigo}});
+            const turmaDeletada = await BaseDatabase.turma.delete({ where: { codigo } });
             return turmaDeletada;
         } catch (error) {
             console.log(error);
@@ -55,16 +55,18 @@ export default class TurmaModel implements BasicCrudOperations<Turma> {
         }
     }
 
-    async insereAluno(data: TurmaAluno & {matricula?: string}) {
+    async insereAluno(data: TurmaAluno & { matricula?: string }) {
         try {
-            const aluno = await BaseDatabase.aluno.findUnique({where: {matricula: data.matricula}});
+            const aluno = await BaseDatabase.aluno.findUnique({ where: { matricula: data.matricula } });
             const alunoId = aluno?.id;
             if (alunoId) {
                 delete data.matricula;
-                const alunoInserido = await BaseDatabase.turmaAluno.create({data: {
-                    ...data,
-                    alunoId,
-                }});
+                const alunoInserido = await BaseDatabase.turmaAluno.create({
+                    data: {
+                        ...data,
+                        alunoId,
+                    }
+                });
                 return alunoInserido;
             }
             return null;

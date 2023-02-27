@@ -14,7 +14,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
     }
     async getById(codigo: string) {
         try {
-            const periodo = await BaseDatabase.periodo.findUnique({where: {codigo}});
+            const periodo = await BaseDatabase.periodo.findUnique({ where: { codigo } });
             return periodo;
         } catch (error) {
             console.log(error);
@@ -34,9 +34,9 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
         periodo.dataFim = new Date(periodo.dataFim);
 
         try {
-            const novoPeriodo = await BaseDatabase.periodo.create({data: periodo});
+            const novoPeriodo = await BaseDatabase.periodo.create({ data: periodo });
             return novoPeriodo;
-            
+
         } catch (error) {
             console.log(error);
             return null;
@@ -50,7 +50,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
         if (!this.periodoCom90DiasOuMais(periodo.dataInicio, periodo.dataFim)) {
             return null;
         }
-        
+
         try {
             const periodoAtualizado = await BaseDatabase.periodo.update({
                 where: {
@@ -66,7 +66,7 @@ export default class PeriodoModel implements BasicCrudOperations<Periodo> {
     }
     async delete(codigo: string) {
         try {
-            const periodoDeletado = await BaseDatabase.periodo.delete({where: {codigo}});
+            const periodoDeletado = await BaseDatabase.periodo.delete({ where: { codigo } });
             return periodoDeletado;
         } catch (error) {
             console.log(error);

@@ -14,18 +14,18 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
     }
     async getById(codigo: string) {
         try {
-            const disciplina = await BaseDatabase.disciplina.findUnique({where: {codigo}});
+            const disciplina = await BaseDatabase.disciplina.findUnique({ where: { codigo } });
             return disciplina;
         } catch (error) {
             console.log(error);
             return null;
         }
     }
-    async create(disciplina: Disciplina) {        
+    async create(disciplina: Disciplina) {
         try {
-            const novaDisciplina = await BaseDatabase.disciplina.create({data: disciplina});
+            const novaDisciplina = await BaseDatabase.disciplina.create({ data: disciplina });
             return novaDisciplina;
-            
+
         } catch (error) {
             console.log(error);
             return null;
@@ -47,7 +47,7 @@ export default class DisciplinaModel implements BasicCrudOperations<Disciplina> 
     }
     async delete(codigo: string) {
         try {
-            const disciplinaDeletada = await BaseDatabase.disciplina.delete({where: {codigo}});
+            const disciplinaDeletada = await BaseDatabase.disciplina.delete({ where: { codigo } });
             return disciplinaDeletada;
         } catch (error) {
             console.log(error);
