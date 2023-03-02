@@ -28,3 +28,31 @@ Testes unitários, testes de integração e testes de sistema
 
 ### Professor
 [Eduardo Kinder Almentero](https://github.com/ekalmentero)
+
+## Inicializando a aplicação
+```bash
+# Clone o repostório
+$ git clone <https://github.com/danvinicius/basic-college-system>
+
+# Entre no projeto pelo terminal
+$ cd basic-college-system
+
+# Abra o editor de código
+$ code .
+
+# Instale as dependências
+$ yarn install
+or
+$ npm install
+
+# Crie um banco no MySQL chamado sistema_aluno_ufrrj
+
+# Rode as migrations
+$ npx prisma migrate dev
+
+# Rode o script de inserção de dados de teste disponível em ./first_insertion.sql
+
+# Inicie a aplicação em modo dev
+$ yarn dev
+or
+$ npm run dev
