@@ -1,4 +1,4 @@
-# basic-college-system
+# college-system
 
 ## Trabalho de Tópicos Especiais em Engenharia de Software
 
@@ -32,10 +32,10 @@ Testes unitários, testes de integração e testes de sistema
 ## Inicializando a aplicação
 ```bash
 # Clone o repostório
-$ git clone <https://github.com/danvinicius/basic-college-system>
+$ git clone <https://github.com/danvinicius/college-system>
 
 # Entre no projeto pelo terminal
-$ cd basic-college-system
+$ cd college-system
 
 # Abra o editor de código
 $ code .
